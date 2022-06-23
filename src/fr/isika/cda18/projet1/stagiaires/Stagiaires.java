@@ -62,5 +62,5 @@ public class Stagiaires {
 		return "Stagiaires [nom=" + nom + ", prenom=" + prenom + ", departement=" + departement + ", promo=" + promo
 				+ ", annee=" + annee + "]";
 	}
-
+//bonjour
 }
