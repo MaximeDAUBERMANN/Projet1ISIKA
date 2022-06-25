@@ -1,7 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
-	<!-- TODO Add Nodes -->
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<BorderPane prefHeight="499.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+   <top>
+      <Pane prefHeight="59.0" prefWidth="600.0" style="-fx-background-color: orange;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="65.0" layoutY="9.0" text="Annuaire des stagiaires ISIKA" textFill="#727272">
+               <font>
+                  <Font name="Leelawadee Bold" size="34.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </top>
+   <center>
+      <Pane prefHeight="378.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView layoutX="-13.0" layoutY="85.0" prefHeight="229.0" prefWidth="403.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Nom " />
+                <TableColumn prefWidth="75.0" text="Prénom" />
+                  <TableColumn prefWidth="104.0" text="Département" />
+                  <TableColumn prefWidth="89.0" text="Promotion" />
+                  <TableColumn minWidth="8.0" prefWidth="59.0" text="Année" />
+              </columns>
+            </TableView>
+            <ImageView blendMode="SRC_ATOP" fitHeight="316.0" fitWidth="600.0" layoutX="-205.0" layoutY="48.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../Downloads/isikalogo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </center>
+   <bottom>
+      <Pane prefHeight="56.0" prefWidth="600.0" style="-fx-background-color: darkgray;" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Slider layoutX="177.0" layoutY="74.0" orientation="VERTICAL" prefHeight="237.0" prefWidth="17.0" />
+            <Pane layoutX="418.0" layoutY="-90.0" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </Pane>
+   </left>
 </BorderPane>
+
+
+
+
+
+
+
+
+
