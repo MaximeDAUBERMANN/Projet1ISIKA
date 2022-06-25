@@ -5,7 +5,7 @@ public class Stagiaire {
 	private String prenom;
 	private String departement;
 	private String promo;
-	private int annee;
+	private String annee;
 	
 	public static final int TAILLE_nom = 21;
 	public static final int TAILLE_prenom = 20;
@@ -13,7 +13,7 @@ public class Stagiaire {
 	public static final int TAILLE_promo = 11;
 	public static final int TAILLE_annee = 4;
 	
-	public Stagiaire(String nom, String prenom, String departement, String promo, int annee) {
+	public Stagiaire(String nom, String prenom, String departement, String promo, String annee) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -45,10 +45,10 @@ public class Stagiaire {
 	public void setPromo(String promo) {
 		this.promo = promo;
 	}
-	public int getAnnee() {
+	public String getAnnee() {
 		return annee;
 	}
-	public void setAnnee(int annee) {
+	public void setAnnee(String annee) {
 		this.annee = annee;
 	}
 	public static int getTailleNom() {
@@ -72,6 +72,77 @@ public class Stagiaire {
 				+ ", annee=" + annee + "]";
 	}
 	
+	public String agrandirNom() {
+		String nomLong = "";
+
+		if (nom.length()<= TAILLE_nom) {
+			nomLong = this.nom;
+		
+		for (int i = nom.length(); i<TAILLE_nom ; i++) {
+			nomLong += " ";
+		}
+		} else {
+			nomLong= this.nom.substring(0,TAILLE_nom);
+		}
+		return nomLong;
+	}
+	public String agrandirPrenom() {
+		String prenomLong = "";
+
+		if (prenom.length()<= TAILLE_prenom) {
+			prenomLong = this.prenom;
+		
+		for (int i = prenom.length(); i<TAILLE_prenom ; i++) {
+			prenomLong += " ";
+		}
+		} else {
+			prenomLong= this.prenom.substring(0,TAILLE_prenom);
+		}
+		return prenomLong;
+	}
+
+	public String agrandirPromo() {
+		String promoLong = "";
+
+		if (promo.length()<= TAILLE_promo) {
+			promoLong = this.promo;
+		
+		for (int i = promo.length(); i<TAILLE_promo ; i++) {
+			promoLong += " ";
+		}
+		} else {
+			promoLong= this.promo.substring(0,TAILLE_promo);
+		}
+		return promoLong;
+	}
 	
+	public String agrandirDepartement() {
+		String departementLong = "";
+
+		if (departement.length()<= TAILLE_departement) {
+			departementLong = this.departement;
+		
+		for (int i = departement.length(); i<TAILLE_departement; i++) {
+			departementLong += " ";
+		}
+		} else {
+			departementLong= this.departement.substring(0,TAILLE_departement);
+		}
+		return departementLong;
+	}
 	
+	public String agrandirAnnee() {
+		String anneeLong = "";
+
+		if (annee.length()<= TAILLE_annee) {
+			anneeLong = this.annee;
+		
+		for (int i = annee.length(); i<TAILLE_annee; i++) {
+			anneeLong += " ";
+		}
+		} else {
+			anneeLong= this.annee.substring(0,TAILLE_annee);
+		}
+		return anneeLong;
+	}
 	}
