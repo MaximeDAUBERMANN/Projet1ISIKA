@@ -1,18 +1,23 @@
 package donnees;
 
 public class Stagiaire {
+	
+	//*****Déclaration des attributs****
+	
 	private String nom;
 	private String prenom;
 	private String departement;
 	private String promo;
 	private String annee;
 	
+	// ****Initialisation des attributs ****
 	public static final int TAILLE_nom = 21;
 	public static final int TAILLE_prenom = 20;
 	public static final int TAILLE_departement = 2;
 	public static final int TAILLE_promo = 11;
 	public static final int TAILLE_annee = 4;
 	
+	//*****Constructeur*****
 	public Stagiaire(String nom, String prenom, String departement, String promo, String annee) {
 		super();
 		this.nom = nom;
@@ -21,6 +26,9 @@ public class Stagiaire {
 		this.promo = promo;
 		this.annee = annee;
 	}
+	
+	
+	//*****Getters & Setters*****
 	public String getNom() {
 		return nom;
 	}
@@ -66,12 +74,15 @@ public class Stagiaire {
 	public static int getTailleAnnee() {
 		return TAILLE_annee;
 	}
+	
+	//**** Affichage*****
 	@Override
 	public String toString() {
 		return "Stagiaire [nom=" + nom + ", prenom=" + prenom + ", departement=" + departement + ", promo=" + promo
 				+ ", annee=" + annee + "]";
 	}
 	
+	//****Agrandir les attributs pour avoir tous la meme taille*****
 	public String agrandirNom() {
 		String nomLong = "";
 
