@@ -7,14 +7,14 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 import donnees.Stagiaire;
-public class ListeStagiaire {
+public class ListeAffichage {
 	private static Stagiaire stagiaire; //Déclarartion du stagiare
 	public static RandomAccessFile raf; //Déclaration du fichier .bin
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
 			raf = new RandomAccessFile("src/arbreStagiaires.bin", "rw");  //création du fichier .bin vide
-			FileReader donnneesStagiaires = new FileReader("src/StagiaireTest.txt"); // lire le fichier .txt des Donnees
+			FileReader donnneesStagiaires = new FileReader("src/Stagiaires.txt"); // lire le fichier .txt des Donnees
 			BufferedReader br = new BufferedReader(donnneesStagiaires);
 			List<Stagiaire> lesStagiaires = new ArrayList<>(); // créer une liste avec Donnees à travers le txt
 			// ****Etape 1 : Parcours de la liste complète****
@@ -41,27 +41,9 @@ public class ListeStagiaire {
 			}
 			
 			// ****Vérification des index ****
-			stagiairesArbre.infixeArbre(); // afficher en order et afficher les index pour chaque stagiaire
-			
-			//***Rechrcher stagiare****
-			stagiairesArbre.rechercherNoeud("NOUAR");
-			//String nom = "LACROIX";
-			//stagiairesArbre.rechercherStagiaire(nom);
-
-			//***Ajouter satagiaire****
-//			Stagiaire stage1 = new Stagiaire("GHARBI", "Tasnim", "77", "CDA 18", "2022");
-//			stagiairesArbre.ajouterNoeud(stage1);
-
-			//***Recherche multicritères****
-			List<Stagiaire> listeRecherche =  new ArrayList<> ();
-			Stagiaire stagiaire2= new Stagiaire(" "," ","75"," ","2015");
-			listeRecherche = stagiairesArbre.rechercheMulticritereArbre(stagiaire2, listeRecherche);
-			System.out.println("********Liste recherchée ******");
-			for(Stagiaire stag : listeRecherche) {
-				System.out.println(stag);
-			}
-			
-			
+			stagiairesArbre.infixeArbre(); // afficher les index pour chaque stagiaire
+			Stagiaire stage1 = new Stagiaire("LACROIX", "Pascale", "91", "BOBI 5", "2008");
+			//stagiairesArbre.rechercherStagiaire(stage1);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

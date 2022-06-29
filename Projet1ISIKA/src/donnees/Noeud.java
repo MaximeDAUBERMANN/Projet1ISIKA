@@ -2,6 +2,7 @@ package donnees;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Noeud {
@@ -99,6 +100,7 @@ public class Noeud {
 	}
 
 	// ****** Ajouter stagiaire*****
+
 //ajouter stagiaire
 	public void ajouterStagiaire(Stagiaire stagiaireAAjouter) throws IOException {
 		System.out.println(this.stagiaire);
@@ -143,8 +145,9 @@ public class Noeud {
 
 	}
 
-//*****lire les index des stagiaires****
-	// methode ecriture les index
+	// *****lire les index des stagiaires****
+
+// methode ecriture les index
 	public void infixe() throws IOException {
 
 		if (this.filsGauche != -1) {
@@ -161,7 +164,7 @@ public class Noeud {
 
 	}
 
-//methode lire les index
+//methode  racine
 	public void infixeArbre() {
 		try {
 			ListeStagiaire.raf.seek(0);
@@ -173,88 +176,142 @@ public class Noeud {
 
 	}
 
-	// ****Recherche stagiaire*****
+	// ****Rechercher stagiaire*****
+//recherche stagiaire
+	public Stagiaire rechercherStagiaire(String stagiaireARechercher) throws IOException {
+		if (stagiaireARechercher.compareTo(this.stagiaire.getNom().trim()) < 0) {
 
-	public boolean rechercherStagiaire(Stagiaire stagiaireARechercher) throws IOException {
-		if (stagiaireARechercher.getNom().compareTo(this.stagiaire.getNom()) < 0) {
-			ListeStagiaire.raf.seek(this.filsGauche * octet); // déplace le curseur à indexFG
-			if (this.filsGauche == -1) {
-				return false;
-			} else if (stagiaireARechercher.getNom() == this.stagiaire.getNom()) {
-				return true;
-			} else {
+			if (this.filsGauche != -1) {
+				ListeStagiaire.raf.seek(this.filsGauche * octet); // déplace le curseur à indexFG
 				Noeud filsG = lireNoeud();// lire noeud fils gauche
-				filsG.rechercherStagiaire(stagiaireARechercher);// appel récursif depuis noeud fils gauche
+				return filsG.rechercherStagiaire(stagiaireARechercher);// appel récursif depuis noeud fils gauche
 			}
-		} else if (stagiaireARechercher.getNom().compareTo(this.stagiaire.getNom()) > 0) {
-			ListeStagiaire.raf.seek(this.filsDroit * octet);// déplace le curseur à indexFD
-			if (this.filsDroit == -1) {
-				return false;
-			} else if (stagiaireARechercher.getNom() == this.getStagiaire().getNom()) {
-				return true;
-			} else {
+
+		} else if (stagiaireARechercher.compareTo(this.stagiaire.getNom()) > 0) {
+
+			if (this.filsDroit != -1) {
+				ListeStagiaire.raf.seek(this.filsDroit * octet);// déplace le curseur à indexFD
 				Noeud filsD = lireNoeud();// lire noeud fils droit
-				filsD.rechercherStagiaire(stagiaireARechercher);// appel récursif depuis noeud fils droit
+				return filsD.rechercherStagiaire(stagiaireARechercher);// appel récursif depuis noeud fils droit
 			}
-		} else
-			return true;
-		return true;
+
+		} else {
+			System.out.println(this.getStagiaire());
+			return this.getStagiaire();
+		}
+		return null;
+	}
+
+	// racine
+	public void rechercherNoeud(String noeud) throws IOException {
+		if (ListeStagiaire.raf.length() != 0) {
+			ListeStagiaire.raf.seek(0);
+			Noeud racine = lireNoeud();
+			racine.rechercherStagiaire(noeud);
+
+		}
+	}
+
+// ****Recherche multicritères*****
+
+	// recherche sur les noeuds
+
+	public List<Stagiaire> rechercheMulticritere(Stagiaire stagRecherche, List<Stagiaire> lesStagiairesRecherche)
+			throws IOException {
+		if (this.filsGauche != -1) {
+			ListeStagiaire.raf.seek(this.filsGauche * octet); // déplace le curseur à indexFG
+			Noeud filsG = lireNoeud();// lire noeud fils gauche
+			filsG.rechercheMulticritere(stagRecherche, lesStagiairesRecherche);// appel récursif depuis noeud
+																						// fils gauche
+		}
+		// noeud
+		boolean verif = false; //par défaut
+		if (!(this.stagiaire.getNom().equals(" "))) {//LACROIX != null
+			if ((stagRecherche.getNom().equals(this.stagiaire.getNom().trim()))) { //" " != LACROIX
+				verif = true; //verif = false
+				System.out.println("Ajoute a l etape : nom");
+				lesStagiairesRecherche.add(this.stagiaire);
+			}
+		}
+		if (!(this.stagiaire.getPrenom().equals(" "))) { // Pascale
+			if ((stagRecherche.getPrenom().equals(this.stagiaire.getPrenom().trim()))) { // " " != Pascale
+				verif = true; //verif = false
+				System.out.println("Ajoute a l etape : prenom ");
+				lesStagiairesRecherche.add(this.stagiaire);
+
+			}
+		}
+		if (!(this.stagiaire.getDepartement().equals(" ")))  { // l'attribut est rempli
+			if ((stagRecherche.getDepartement().equals(this.stagiaire.getDepartement().trim()))) { //les attributs du noeud actuel et du noeud arbtre sont différents
+				verif = true; //false 
+				System.out.println("Ajoute a l etape : departement");
+				lesStagiairesRecherche.add(this.stagiaire);
+
+			}
+		}
+		if (!(this.stagiaire.getPromo().equals(" "))) {
+			if ((stagRecherche.getPromo().equals(this.stagiaire.getPromo().trim()))) {
+				verif = true; //true
+				System.out.println("Ajoute a l etape : promo ");
+				lesStagiairesRecherche.add(this.stagiaire);
+
+			}
+		}
+		if (!(this.stagiaire.getAnnee().equals(" "))) {
+			if ((stagRecherche.getAnnee().equals(this.stagiaire.getAnnee().trim()))) {
+				verif = true; //false on aura jamais des stagiaires
+				System.out.println("Ajoute a l etape : annee");
+				lesStagiairesRecherche.add(this.stagiaire);
+
+			}
+		}
+		//lesStagiairesRecherche.add(this.stagiaire);
+		// ajouter dans la liste
+		if (verif == true) {
+			System.out.println("dans le if de la liste");
+			lesStagiairesRecherche.add(this.stagiaire);
+		}
+		verif = false;
+		//System.out.println(lesStagiairesRecherche);
+
+		if (this.filsDroit != -1) {
+			ListeStagiaire.raf.seek(this.filsDroit * octet);// déplace le curseur à indexFD
+			Noeud filsD = lireNoeud();// lire noeud fils droit
+			filsD.rechercheMulticritere(stagRecherche, lesStagiairesRecherche);// appel récursif depuis noeud
+																						// fils droit
+		}
+
+		return lesStagiairesRecherche;
+	}
+
+	// rechercheRacine
+	public List<Stagiaire> rechercheMulticritereArbre(Stagiaire stagiaire, List<Stagiaire> lesStagiairesRecherche) {
+		try {
+			ListeStagiaire.raf.seek(0);
+			lesStagiairesRecherche = this.lireNoeud().rechercheMulticritere(stagiaire, lesStagiairesRecherche);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return lesStagiairesRecherche;
+	}
+
+//****Methode supprimer****
+	// successeur
+	public Noeud noeudSuccesseur() throws IOException {
+		ListeStagiaire.raf.seek(0);
+		ListeStagiaire.raf.seek(this.filsDroit * octet);// déplace le curseur à indexFD
+		Noeud noeudCourant = lireNoeud();
+		while (noeudCourant.filsGauche != -1) {
+			System.out.println("dans le while");
+			// ListeStagiaire.raf.seek(this.filsGauche * octet); // déplace le curseur à
+			// indexFG
+			noeudCourant = lireNoeud();// lire noeud fils gauche
+		}
+		return noeudCourant;
 	}
 
 	//
-//	public int hauteur() { // taille du plus grand chemin de la racine a une feuille
-//		if (this.filsGauche == null && this.filsDroit == null) {
-//			return 0;
-//		} else if (this.filsDroit == null) {
-//			return 1 + this.filsGauche.hauteur();
-//		} else if (this.filsGauche == null) {
-//			return 1 + this.filsDroit.hauteur();
-//		} else {
-//			return 1 + Math.max(this.filsDroit.hauteur(), this.filsGauche.hauteur());
-//
-//		}
-//	}
-
-//	public int nbNoeuds() {
-//		if (this.filsDroit == null && this.filsGauche == null) {
-//			return 0;
-//		} else if (this.filsDroit != null && this.filsGauche == null) {
-//			return 1 + filsDroit.nbNoeuds();
-//		} else if (this.filsDroit == null && this.filsGauche != null) {
-//			return 1 + filsGauche.nbNoeuds();
-//		} else {
-//			return 1 + filsGauche.nbNoeuds() + filsDroit.nbNoeuds();
-//		}
-//	}
-
-	/*
-	 * 
-	 * public Noeud supprimerNoeud(String valeurASupprimer) { if (this.prenom ==
-	 * (valeurASupprimer)) { return this; } else if (valeurASupprimer)) { return
-	 * this.filsDroit;
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
-
-//	public Noeud noeudSuccesseur() {
-//		Noeud noeudCourant = filsDroit;
-//		while (noeudCourant.filsGauche != null) {
-//			noeudCourant = filsGauche;
-//		}
-//		return noeudCourant;
-//	}
-
-	/*
-	 * public Noeud supprimerRacine() { // pas de descendants if (filsGauche == null
-	 * && filsDroit == null) { return null; } // un seul descendant else if
-	 * (filsGauche != null || filsDroit != null) { if (filsGauche != null) { return
-	 * filsGauche; } else if (filsDroit != null) { return filsDroit; } // deux
-	 * descendants } else { this.filsDroit = this; return
-	 * this.filsDroit.noeudSuccesseur(); } }
-	 * 
-	 * }
-	 */
 
 }
